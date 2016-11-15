@@ -47,6 +47,7 @@ class Analytics
             'ga:users,ga:pageviews',
             ['dimensions' => 'ga:date,ga:pageTitle']
         );
+
         return array_map(function ($dateRow) {
             return [
                 'date' => Carbon::createFromFormat('Ymd', $dateRow[0]),
@@ -55,24 +56,18 @@ class Analytics
                 'pageViews' => (int) $dateRow[3],
             ];
         }, $response['rows']);
-
-        /*return collect($response['rows'] or [])->map(function ($dateRow) {
-            return [
-                'date' => Carbon::createFromFormat('Ymd', $dateRow[0]),
-                'pageTitle' => $dateRow[1],
-                'visitors' => (int) $dateRow[2],
-                'pageViews' => (int) $dateRow[3],
-            ];
-        });*/
     }
 
-    public function fetchTotalVisitorsAndPageViews(Period $period)
+    public function fetchTotalVisitorsAndPageViews(Period $period, $view_id = null)
     {
+        !empty($view_id) and $this->viewId = $view_id;
+
         $response = $this->performQuery(
             $period,
             'ga:users,ga:pageviews',
             ['dimensions' => 'ga:date']
         );
+
         return array_map(function ($dateRow) {
             return [
                 'date' => Carbon::createFromFormat('Ymd', $dateRow[0]),
