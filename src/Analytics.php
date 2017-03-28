@@ -58,8 +58,10 @@ class Analytics
         });
     }
 
-    public function fetchTotalVisitorsAndPageViews(Period $period): Collection
+    public function fetchTotalVisitorsAndPageViews(Period $period, $view_id = null): Collection
     {
+        !empty($view_id) and $this->viewId = $view_id;
+
         $response = $this->performQuery(
             $period,
             'ga:users,ga:pageviews',

@@ -8,8 +8,16 @@ use Illuminate\Contracts\Cache\Repository;
 
 class AnalyticsClientFactory
 {
+    private static $config = [];
+
     public static function createForConfig(array $analyticsConfig): AnalyticsClient
     {
+        if (!empty(static::$config)) {
+            $analyticsConfig = static::$config;
+        } else {
+            static::$config = $analyticsConfig;
+        }
+
         $authenticatedClient = self::createAuthenticatedGoogleClient($analyticsConfig);
 
         $googleService = new Google_Service_Analytics($authenticatedClient);
