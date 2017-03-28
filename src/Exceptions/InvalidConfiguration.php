@@ -8,7 +8,7 @@ class InvalidConfiguration extends Exception
 {
     public static function viewIdNotSpecified()
     {
-        return new static('There was no view id specified. You must provide a valid view id to execute querys on Google Analytics.');
+        return new static('You must provide a valid view id.');
     }
 
     public static function credentialsJsonDoesNotExist(string $path)
