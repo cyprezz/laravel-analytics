@@ -10,13 +10,9 @@ class AnalyticsClientFactory
 {
     private static $config = [];
 
-    public static function createForConfig(array $analyticsConfig)
+    public static function createForConfig(array $analyticsConfig = [])
     {
-        if (!empty(static::$config)) {
-            $analyticsConfig = static::$config;
-        } else {
-            static::$config = $analyticsConfig;
-        }
+        $analyticsConfig = $analyticsConfig ? $analyticsConfig : static::$config;
 
         $authenticatedClient = self::createAuthenticatedGoogleClient($analyticsConfig);
 
